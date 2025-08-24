@@ -1,0 +1,40 @@
+[project]
+name = "discord-ai"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "agents>=1.4.0",
+    "alembic>=1.13.0",
+    "discord-py>=2.6.0",
+    "gitingest>=0.3.1",
+    "langfuse>=3.3.0",
+    "logfire>=4.3.5",
+    "loguru>=0.7.3",
+    "openai-agents>=0.2.9",
+    "pydantic-settings>=2.10.1",
+    "python-dotenv>=1.1.1",
+    "ruff>=0.12.10",
+    "sqlmodel>=0.0.14",
+]
+
+[tool.ruff]
+line-length = 120
+lint.select = ["E", "F", "W", "I"]
+exclude = [
+    "node_modules",
+    "venv",
+    "env",
+    "dist",
+    "build",
+    "*.pyc",
+    "*.pyo",
+    "*.pyd",
+    "__pycache__",
+    "*.egg-info",
+    "*.egg",
+    "*.tar.gz",
+    "*.zip",
+    "*.whl",
+]
