@@ -17,11 +17,13 @@ logfire.configure(
 logfire.instrument_openai_agents()
 
 
-async def run_agent(message: str, current_conversation: list = None, image_urls: list[str] = None) -> tuple[str, list]:
+async def run_agent(
+    message: str, current_conversation: list | None = None, image_urls: list[str] | None = None
+) -> tuple[str, list]:
     async with get_mcp_servers_context() as (active_servers, stack):
         agent = Agent(
             "Devscale AI",
-            model="gpt-4.1",
+            model="gpt-5-mini",
             instructions=INSTRUCTION,
             mcp_servers=active_servers,
             tools=[WebSearchTool(), get_github_repo_content],

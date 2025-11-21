@@ -5,7 +5,7 @@ from sqlmodel import SQLModel
 
 from alembic import context
 from app.core.settings import settings
-from app.database.models import ChatMessage, ChatSession  # noqa
+from app.database.models import ConversationHistory  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
