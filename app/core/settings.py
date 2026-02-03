@@ -6,6 +6,8 @@ class Settings(BaseSettings):
     MONITORED_CHANNEL_ID: str
     OPENAI_API_KEY: str
 
+    TAVILY_API_KEY: str = ""
+
     LANGFUSE_PUBLIC_KEY: str = ""
     LANGFUSE_SECRET_KEY: str = ""
     LANGFUSE_HOST: str = ""

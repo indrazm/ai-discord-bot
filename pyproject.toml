@@ -11,11 +11,12 @@ dependencies = [
     "langfuse>=3.10.1",
     "logfire>=4.3.5",
     "loguru>=0.7.3",
-    "openai-agents>=0.6.1",
+    "openai-agents[litellm]>=0.7.0",
     "pydantic-settings>=2.10.1",
     "python-dotenv>=1.1.1",
     "ruff>=0.12.10",
     "sqlmodel>=0.0.14",
+    "tavily-python>=0.5.0",
 ]
 
 [tool.ruff]

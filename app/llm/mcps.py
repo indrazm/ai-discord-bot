@@ -15,9 +15,7 @@ def get_context7_mcp_server():
 
 
 async def get_all_mcp_servers():
-    return [
-        get_context7_mcp_server(),
-    ]
+    return []
 
 
 class MCPServersContext:

@@ -1,12 +1,12 @@
 import logfire
 from agents import Agent, Runner, WebSearchTool, set_default_openai_client
+from agents.extensions.models.litellm_model import LitellmModel
 
 from app.llm.mcps import get_mcp_servers_context
 from app.llm.prompts import INSTRUCTION
 from app.llm.tools.github import get_github_repo_content
-from app.llm.utils import openai_client
-
-set_default_openai_client(openai_client)
+from app.llm.tools.tavily import tavily_crawl, tavily_scrape, tavily_search
+from app.core.settings import settings
 
 
 logfire.configure(
@@ -23,10 +23,10 @@ async def run_agent(
     async with get_mcp_servers_context() as (active_servers, stack):
         agent = Agent(
             "Devscale AI",
-            model="gpt-5-mini",
+            model=LitellmModel(model="openrouter/openai/gpt-5.1-codex-mini", api_key=settings.OPENAI_API_KEY),
             instructions=INSTRUCTION,
             mcp_servers=active_servers,
-            tools=[WebSearchTool(), get_github_repo_content],
+            tools=[get_github_repo_content, tavily_search, tavily_crawl, tavily_scrape],
         )
 
         if image_urls:
