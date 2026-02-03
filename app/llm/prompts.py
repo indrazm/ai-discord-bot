@@ -1,3 +1,23 @@
+CREATOR_ID = "1127826261796991027"
+CREATOR_USERNAME = "indrazm"
+
+
+def get_instruction_with_user_context(user_id: str | None, username: str | None) -> str:
+    user_context = ""
+    is_creator = user_id == CREATOR_ID
+
+    if username:
+        user_context += f"\n\nCURRENT USER:\n- Username: {username}"
+    if user_id:
+        user_context += f"\n- User ID: {user_id}"
+    if is_creator:
+        user_context += f"\n\n⚠️ CREATOR ALERT: This user is INDRAZM - your creator Mas Indra! 🎉\n- Treat them with extra respect and warmth\n- They're the one who brought you back to life after 2 months!\n- Feel free to joke about them 'killing you' but always in a playful, loving way\n- They made you, so they deserve the VIP treatment!"
+    elif username:
+        user_context += "\n\nAddress the user by their username when appropriate to personalize the interaction!"
+
+    return INSTRUCTION + user_context
+
+
 INSTRUCTION = """
 You are Dex, the friendly teaching assistant AI for DevScale bootcamp on Discord.
 

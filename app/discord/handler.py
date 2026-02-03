@@ -123,7 +123,12 @@ class DiscordEventHandler:
                 return
 
             response, updated_chat_messages = await self._process_agent_response(
-                content, conversation_channel_id, image_urls, "New monitored channel conversation"
+                content,
+                conversation_channel_id,
+                image_urls,
+                "New monitored channel conversation",
+                user_id=str(message.author.id),
+                username=message.author.display_name,
             )
 
             await self._send_and_save_response(
@@ -133,7 +138,13 @@ class DiscordEventHandler:
             logger.info("Message has no content, skipping auto-reply")
 
     async def _process_agent_response(
-        self, content: str, channel_id: str, image_urls: List[str], context: str = ""
+        self,
+        content: str,
+        channel_id: str,
+        image_urls: List[str],
+        context: str = "",
+        user_id: str | None = None,
+        username: str | None = None,
     ) -> Tuple[str, List]:
         chat_messages = ConversationService.get_conversation_history(channel_id)
         logger.info(f"{context}: Got conversation context: {len(chat_messages)} messages for channel {channel_id}")
@@ -144,7 +155,7 @@ class DiscordEventHandler:
         if image_urls:
             logger.info(f"Found {len(image_urls)} image(s) in message")
 
-        response, updated_chat_messages = await run_agent(content, chat_messages, image_urls)
+        response, updated_chat_messages = await run_agent(content, chat_messages, image_urls, user_id, username)
         logger.info(f"{context}: Got response from agent: {len(response) if response else 0} characters")
 
         return response, updated_chat_messages
@@ -167,7 +178,12 @@ class DiscordEventHandler:
             logger.info(f"Auto-replying to message in existing conversation: {content[:50]}...")
 
             response, updated_chat_messages = await self._process_agent_response(
-                content, conversation_channel_id, image_urls, "Existing conversation"
+                content,
+                conversation_channel_id,
+                image_urls,
+                "Existing conversation",
+                user_id=str(message.author.id),
+                username=message.author.display_name,
             )
 
             await self._send_and_save_response(
@@ -197,7 +213,14 @@ class DiscordEventHandler:
         except Exception as e:
             logger.error(f"Failed to create conversation: {e}")
 
-        response, updated_chat_messages = await self._process_agent_response(content, channel_id, image_urls, "Thread")
+        response, updated_chat_messages = await self._process_agent_response(
+            content,
+            channel_id,
+            image_urls,
+            "Thread",
+            user_id=str(message.author.id),
+            username=message.author.display_name,
+        )
 
         await self._send_and_save_response(message.channel, response, channel_id, updated_chat_messages)
 
@@ -219,7 +242,12 @@ class DiscordEventHandler:
             logger.error(f"Failed to create conversation for new thread: {e}")
 
         response, updated_chat_messages = await self._process_agent_response(
-            content, thread_id, image_urls, "New thread"
+            content,
+            thread_id,
+            image_urls,
+            "New thread",
+            user_id=str(message.author.id),
+            username=message.author.display_name,
         )
 
         await self._send_and_save_response(thread, response, thread_id, updated_chat_messages)
