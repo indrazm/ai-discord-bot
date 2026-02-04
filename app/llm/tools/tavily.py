@@ -9,7 +9,7 @@ tavily_client = AsyncTavilyClient(api_key=settings.TAVILY_API_KEY) if settings.T
 
 
 @function_tool
-async def tavily_search(query: str, include_domains: list[str], max_results: int = 5, search_depth: Literal["basic", "advanced"] = "basic") -> dict:
+async def tavily_search(query: str, include_domains: list[str], max_results: int = 10, search_depth: Literal["basic", "advanced"] = "advanced") -> dict:
     """
     Search the web using Tavily API for real-time information.
 
@@ -21,7 +21,7 @@ async def tavily_search(query: str, include_domains: list[str], max_results: int
         max_results (int): Maximum number of search results to return (default: 5, max: 20).
         search_depth (str): Search depth level - "basic" for quick results or "advanced"
             for more comprehensive results (default: "basic").
-        include_domains: (list[str]): Search web, if user asking documentation please use https://guides.devscale.id
+        include_domains: (list[str]): Search web
 
     Returns:
         dict: A dictionary containing search results with the following keys:
@@ -43,9 +43,10 @@ async def tavily_search(query: str, include_domains: list[str], max_results: int
     response = await tavily_client.search(
         query=query,
         max_results=max_results,
-        search_depth=search_depth,
+        search_depth="advanced",
         include_answer=True,
-        include_domains=include_domains
+        include_domains=include_domains,
+        include_raw_content="markdown"
     )
     return response
 
