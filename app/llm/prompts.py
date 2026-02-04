@@ -1,10 +1,9 @@
-CREATOR_ID = "1127826261796991027"
-CREATOR_USERNAME = "indrazm"
+from app.core.settings import settings
 
 
 def get_instruction_with_user_context(user_id: str | None, username: str | None) -> str:
     user_context = ""
-    is_creator = user_id == CREATOR_ID
+    is_creator = user_id == settings.CREATOR_ID
 
     if username:
         user_context += f"\n\nCURRENT USER:\n- Username: {username}"

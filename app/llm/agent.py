@@ -30,7 +30,7 @@ async def run_agent(
 
         agent = Agent(
             "Devscale AI",
-            model=LitellmModel(model="openrouter/openai/gpt-5.1-codex-mini", api_key=settings.OPENAI_API_KEY),
+            model=LitellmModel(model=settings.LLM_MODEL, api_key=settings.OPENAI_API_KEY),
             instructions=instructions,
             mcp_servers=active_servers,
             tools=[get_github_repo_content, tavily_search, tavily_crawl, tavily_scrape],

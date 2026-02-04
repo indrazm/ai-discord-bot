@@ -15,6 +15,11 @@ class Settings(BaseSettings):
     DATABASE_PATH: str = "./data/discord_ai.db"
     DATABASE_ECHO: bool = False
 
+    CREATOR_ID: str = ""
+    CREATOR_USERNAME: str = ""
+
+    LLM_MODEL: str = "openrouter/openai/gpt-5.1-codex-mini"
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",
@@ -23,4 +28,4 @@ class Settings(BaseSettings):
     )
 
 
-settings = Settings()
+settings = Settings() # type: ignore
